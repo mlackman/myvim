@@ -1,4 +1,3 @@
-let g:loaded_youcompleteme = 1
 set nocompatible              " be iMproved, required
 filetype off                  " required
 set backspace=indent,eol,start
@@ -7,6 +6,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call plug#begin('~/.vim/plugged')
 Plug 'janko-m/vim-test'
 Plug 'crusoexia/vim-monokai'
+Plug 'vimwiki/vimwiki'
 "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 call plug#end()
 
@@ -16,10 +16,13 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'IN3D/vim-raml'
 "Plugin 'thoughtbot/vim-rspec'
 "Plugin 'JarrodCTaylor/vim-python-test-runner'
+Plugin 'scrooloose/syntastic'
 Plugin 'majutsushi/tagbar'
 Plugin 'szw/vim-tags'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'flebel/vim-mypy', { 'for': 'python', 'branch': 'bugfix/fast_parser_is_default_and_only_parser' }
+Plugin 'scrooloose/nerdtree'
+" Plugin 'davidhalter/jedi-vim'
+" Plugin 'flebel/vim-mypy', { 'for': 'python', 'branch': 'bugfix/fast_parser_is_default_and_only_parser' }
 
 call pathogen#infect()
 
@@ -31,18 +34,21 @@ set shiftwidth=4
 set expandtab
 :set ignorecase
 filetype off
+let python_highlight_all=1
 syntax on
 
 " default fold method
-set foldmethod=indent
+set foldmethod=syntax
 set foldnestmax=10
-set nofoldenable
-set foldlevel=2
+set foldlevelstart=99
+" set nofoldenable -- to disable folding
+" set foldlevel=2
 
 filetype plugin indent on
 " Nerdtree
 map ? :NERDTreeToggle<cr>
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+let g:NERDTreeWinSize=60
 
 map rc :TestFile<CR>
 map rl :TestLast<CR>
@@ -52,6 +58,9 @@ map å :set invpaste<cr>i
 imap jk <esc>
 nmap ; :CtrlP .<cr>
 nmap <Leader>t :Files<CR>
+
+"YCM
+map <leader>d  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -66,6 +75,7 @@ let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_mode_map = {
     \ "mode": "active",
     \ "passive_filetypes": ["html"]}
+
 
 autocmd BufRead,BufNewFile *.svelte setfiletype html
 
